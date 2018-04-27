@@ -4,17 +4,14 @@ import 'babel-polyfill'
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import hljs from './common/js/highlight'
+import './common/js/highlight'
 
-// TODO 需要使用 vConsole 的同学请打开注释即可
+// 需要使用 vConsole 的同学请打开注释即可
 /* eslint-disable no-unused-vars */
 // import vConsole from 'vconsole'
 
 import './common/stylus/index.styl'
-import 'highlight.js/styles/solarized-dark.css'
-
-hljs.initHighlightingOnLoad()
-
+import 'highlight.js/styles/atelier-dune-light.css'
 import './common/js/directive.js'
 
 /* eslint-disable no-new */

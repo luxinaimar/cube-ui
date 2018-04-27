@@ -1,5 +1,7 @@
 ## Quick start
 
+[Application Guide](https://github.com/cube-ui/cube-application-guide)
+
 ### CLI
 
 If you are going to create a new project with cube-ui, use the [cli tools](https://github.com/cube-ui/cube-template) base on [vue-cli](https://github.com/vuejs/vue-cli) to init the config and base code, then you can ignore the <a href="#cube-Install-anchor" class="anchor">Install</a> steps and see the <a href="#cube-Usage-anchor" class="anchor">Usage</a> part directly.
@@ -19,8 +21,6 @@ If you are going to use cube-ui in an existing project, see the <a href="#cube-I
 $ npm install cube-ui --save
 ```
 
-Note: Remember don't use cnpm to install cube-ui, the package download by cnpm has some problems with path.
-
 Since cube-ui support two compile ways such as [post-compile] (#/en-US/docs/post-compile) and normal compile with webpack 2+(by default using post-compile), you need to modify your application's dependencies and configuration before using it.
 
 - post-compile
@@ -31,45 +31,41 @@ Since cube-ui support two compile ways such as [post-compile] (#/en-US/docs/post
     {
       // webpack-post-compile-plugin depends on compileDependencies
       "compileDependencies": ["cube-ui"],
+      // webpack-transform-modules-plugin depends on transformModules
+      "transformModules": {
+        "cube-ui": {
+          "transform": "cube-ui/src/modules/${member}",
+          "kebabCase": true
+        }
+      },
       "devDependencies": {
         "babel-plugin-transform-modules": "^0.1.0",
         // add stylus dependencies
         "stylus": "^0.54.5",
         "stylus-loader": "^2.1.1",
-        "webpack-post-compile-plugin": "^0.1.2"
+        "webpack-post-compile-plugin": "^0.1.2",
+        "webpack-transform-modules-plugin": "^0.3.1"
       }
     }
     ```
 
-  2. Modify .babelrc, use [babel-plugin-transform-modules](https://www.npmjs.com/package/babel-plugin-transform-modules):
-
-    ```json
-    {
-      "plugins": ["transform-modules", {
-        "cube-ui": {
-          // Notice: this path should be changed to `src/modules`
-          "transform": "cube-ui/src/modules/${member}",
-          "kebabCase": true
-        }
-      }]
-    }
-    ```
-
-  3. Modify webpack.base.conf.js
+  2. Modify webpack.base.conf.js
 
     ```js
     var PostCompilePlugin = require('webpack-post-compile-plugin')
+    var TransformModulesPlugin = require('webpack-transform-modules-plugin')
     module.exports = {
       // ...
       plugins: [
         // ...
-        new PostCompilePlugin()
+        new PostCompilePlugin(),
+        new TransformModulesPlugin()
       ]
       // ...
     }
     ```
 
-  4. Modify `exports.cssLoaders` function in build/utils.js
+  3. Modify `exports.cssLoaders` function in build/utils.js
 
     ```js
     exports.cssLoaders = function (options) {
@@ -89,7 +85,7 @@ Since cube-ui support two compile ways such as [post-compile] (#/en-US/docs/post
       }
     }
     ```
-  5. Modify vue-loader.conf.js
+  4. Modify vue-loader.conf.js
 
     ```javascript
     module.exports = {
@@ -110,35 +106,27 @@ Since cube-ui support two compile ways such as [post-compile] (#/en-US/docs/post
 
     ```json
     {
+      // webpack-transform-modules-plugin depends on transformModules
+      "transformModules": {
+        "cube-ui": {
+          "transform": "cube-ui/lib/${member}",
+          "kebabCase": true,
+          "style": {
+            "ignore": ["create-api", "better-scroll"]
+          }
+        }
+      },
       "devDependencies": {
-        "babel-plugin-transform-modules": "^0.1.0"
+        "webpack-transform-modules-plugin": "^0.3.1"
       }
     }
     ```
 
-  2. Modify .babelrc
-
-    ```json
-    {
-      "plugins": [
-        ["transform-modules", {
-          "cube-ui": {
-            "transform": "cube-ui/lib/${member}",
-            "kebabCase": true,
-            "style": {
-              "ignore": ["create-api", "better-scroll"]
-            }
-          }
-        }]
-      ]
-    }
-    ```
-
-  3. Modify webpack config
+  2. Modify webpack config
 
     ```js
     // webpack.config.js
-
+    var TransformModulesPlugin = require('webpack-transform-modules-plugin')
     module.exports = {
       // ...
       resolve: {
@@ -150,6 +138,11 @@ Since cube-ui support two compile ways such as [post-compile] (#/en-US/docs/post
         }
         // ...
       }
+      // ...
+      plugins: [
+        // ...
+        new TransformModulesPlugin()
+      ]
       // ...
     }
     ```
@@ -218,6 +211,7 @@ import {
   Scroll,
   Slide,
   IndexList
+  // ... more
 } from 'cube-ui'
 ```
 

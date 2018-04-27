@@ -5,6 +5,7 @@ import {
   Popup,
   TimePicker,
   SegmentPicker,
+  DatePicker,
   Select,
   Dialog,
   Tip,
@@ -13,6 +14,7 @@ import {
   Validator,
   Textarea,
   Rate,
+  Form,
   ActionSheet,
   CheckboxGroup,
   RadioGroup,
@@ -21,6 +23,7 @@ import {
   IndexList,
   Upload,
   Swipe,
+  Drawer,
   BScroll,
   createAPI
 } from './module'
@@ -35,6 +38,7 @@ function install(Vue) {
     Button,
     TimePicker,
     SegmentPicker,
+    DatePicker,
     Select,
     Dialog,
     Tip,
@@ -46,13 +50,15 @@ function install(Vue) {
     CheckboxGroup,
     RadioGroup,
     Switch,
+    Form,
     Slide,
     IndexList,
     ActionSheet,
     Scroll,
     Popup,
     Upload,
-    Swipe
+    Swipe,
+    Drawer
   ]
   components.forEach((Component) => {
     Component.install(Vue)

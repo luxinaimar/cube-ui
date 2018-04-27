@@ -1,9 +1,10 @@
 {
   "name": "cube-ui",
-  "version": "1.6.1",
+  "version": "1.8.1",
   "description": "A fantastic mobile ui lib implement by Vue",
   "main": "lib/index.js",
   "module": "src/index.js",
+  "postCompile": true,
   "scripts": {
     "prebuild": "npm run unit",
     "build": "node build/build.js",
@@ -39,7 +40,7 @@
   ],
   "license": "Apache",
   "dependencies": {
-    "better-scroll": "^1.8.4"
+    "better-scroll": "^1.10.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.1",
@@ -63,12 +64,14 @@
     "cross-env": "^5.0.1",
     "css-loader": "^0.28.0",
     "eslint": "^3.19.0",
-    "eslint-config-standard": "^6.2.1",
-    "eslint-friendly-formatter": "^2.0.7",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",
-    "eslint-plugin-html": "^2.0.0",
+    "eslint-plugin-html": "^3.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.2.0",
     "eslint-plugin-promise": "^3.4.0",
-    "eslint-plugin-standard": "^2.0.1",
+    "eslint-plugin-standard": "^3.0.1",
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.14.1",
     "extract-text-webpack-plugin": "^3.0.0",
@@ -89,6 +92,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-spec-reporter": "0.0.31",
     "karma-webpack": "^2.0.2",
+    "lodash-es": "^4.17.8",
     "lolex": "^1.5.2",
     "markdown-it-anchor-cube": "^0.0.1",
     "marked": "^0.3.6",

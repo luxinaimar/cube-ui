@@ -27,7 +27,7 @@ export default {
   watch: {
     $route (to, from) {
       this.oldPath = `#${to.path}`
-      this.scrollToHash()
+      this.scrollToHash(to.hash)
     }
   },
   methods: {
@@ -45,9 +45,11 @@ export default {
         matcher = hash.match(pattern)
         newUrl = this.oldPath + hash
         window.location.hash = newUrl
-        const anchor = matcher[1]
-        const el = document.querySelector(`#${anchor}`)
-        el && el.scrollIntoView()
+        setTimeout(() => {
+          const anchor = decodeURIComponent(matcher[1])
+          const el = document.querySelector(`#${anchor}`)
+          el && el.scrollIntoView()
+        })
       }
     }
   }
@@ -59,4 +61,7 @@ export default {
   #app
     width: 100%
     height: 100%
+    background-color: white
+  .ov-hidden
+    overflow: hidden
 </style>

@@ -2,6 +2,8 @@
 
 `Toast` component.You can use it to show non-modal tip message without user interaction.
 
+__Notice:__ Cause this component used create-api, so you should read [create-api](#/en-US/docs/create-api) first.
+
 ### Example
 
 - Duration of display
@@ -85,3 +87,17 @@
 | mask | whether to show mask layer | Boolean | true/false | false |
 | txt | tip text | String | - | '' |
 | time | display duration, millisecond | Number | - | 3000 |
+| visible<sup>1.8.1</sup> | whether visible. Bind to `v-model` | Boolean | true/false | false |
+
+### Events
+
+| Event Name | Description |
+| - | - |
+| timeout | triggers when the display time is out |
+
+### Instance methods
+
+| Method name | Description |
+| - | - |
+| show | show |
+| hide | hide |

@@ -10,23 +10,39 @@ import Toast from '../pages/toast.vue'
 import Input from '../pages/input.vue'
 import Textarea from '../pages/textarea.vue'
 import Rate from '../pages/rate.vue'
+import Form from '../pages/form/index.vue'
+import FormDefault from '../pages/form/default.vue'
+import FormCustom from '../pages/form/custom.vue'
+import FormClassic from '../pages/form/classic.vue'
+import FormFresh from '../pages/form/fresh.vue'
 import Picker from '../pages/picker.vue'
 import CascadePicker from '../pages/cascade-picker.vue'
 import SegmentPicker from '../pages/segment-picker.vue'
+import DatePicker from '../pages/date-picker.vue'
 import TimePicker from '../pages/time-picker.vue'
 import Select from '../pages/select.vue'
 import Dialog from '../pages/dialog.vue'
 import ActionSheet from '../pages/action-sheet.vue'
 import Scroll from '../pages/scroll.vue'
-import Slide from '../pages/slide.vue'
-import IndexList from '../pages/index-list/index-list.vue'
+import IndexList from '../pages/index-list/index.vue'
 import IndexListDefault from '../pages/index-list/default.vue'
 import IndexListCustom from '../pages/index-list/custom.vue'
-import Upload from '../pages/upload.vue'
+import IndexListPullUpLoad from '../pages/index-list/pull-up-load.vue'
+import IndexListPullDownRefresh from '../pages/index-list/pull-down-refresh.vue'
+import Upload from '../pages/upload/index.vue'
+import UploadDefault from '../pages/upload/default.vue'
+import UploadCompress from '../pages/upload/compress.vue'
+import UploadCustom from '../pages/upload/custom.vue'
 import Validator from '../pages/validator.vue'
 import Swipe from '../pages/swipe/index.vue'
 import SwipeDefault from '../pages/swipe/default.vue'
 import SwipeCustom from '../pages/swipe/custom.vue'
+import Drawer from '../pages/drawer/index.vue'
+import DrawerDefault from '../pages/drawer/default.vue'
+import DrawerCustom from '../pages/drawer/custom.vue'
+import Slide from '../pages/slide/index.vue'
+import SlideVertical from '../pages/slide/vertical.vue'
+import SlideHorizontal from '../pages/slide/horizontal.vue'
 
 const routes = [
   {
@@ -56,6 +72,28 @@ const routes = [
   {
     path: '/switch',
     component: Switch
+  },
+  {
+    path: '/form',
+    component: Form,
+    children: [
+      {
+        path: 'default',
+        component: FormDefault
+      },
+      {
+        path: 'custom',
+        component: FormCustom
+      },
+      {
+        path: 'classic',
+        component: FormClassic
+      },
+      {
+        path: 'fresh',
+        component: FormFresh
+      }
+    ]
   },
   {
     path: '/loading',
@@ -90,6 +128,10 @@ const routes = [
     component: SegmentPicker
   },
   {
+    path: '/date-picker',
+    component: DatePicker
+  },
+  {
     path: '/time-picker',
     component: TimePicker
   },
@@ -110,10 +152,6 @@ const routes = [
     component: Scroll
   },
   {
-    path: '/slide',
-    component: Slide
-  },
-  {
     path: '/index-list',
     component: IndexList,
     children: [
@@ -124,12 +162,34 @@ const routes = [
       {
         path: 'custom',
         component: IndexListCustom
+      },
+      {
+        path: 'pull-up-load',
+        component: IndexListPullUpLoad
+      },
+      {
+        path: 'pull-down-refresh',
+        component: IndexListPullDownRefresh
       }
     ]
   },
   {
     path: '/upload',
-    component: Upload
+    component: Upload,
+    children: [
+      {
+        path: 'default',
+        component: UploadDefault
+      },
+      {
+        path: 'compress',
+        component: UploadCompress
+      },
+      {
+        path: 'custom',
+        component: UploadCustom
+      }
+    ]
   },
   {
     path: '/validator',
@@ -146,6 +206,34 @@ const routes = [
       {
         path: 'custom',
         component: SwipeCustom
+      }
+    ]
+  },
+  {
+    path: '/drawer',
+    component: Drawer,
+    children: [
+      {
+        path: 'default',
+        component: DrawerDefault
+      },
+      {
+        path: 'custom',
+        component: DrawerCustom
+      }
+    ]
+  },
+  {
+    path: '/slide',
+    component: Slide,
+    children: [
+      {
+        path: 'vertical',
+        component: SlideVertical
+      },
+      {
+        path: 'horizontal',
+        component: SlideHorizontal
       }
     ]
   }
