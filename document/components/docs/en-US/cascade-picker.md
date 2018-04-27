@@ -1,6 +1,10 @@
 ## CascadePicker
 
+> New in 1.2.0+
+
 `CascadePicker` component is used to implement the cascading change between picker columns. What is the effect of cascade? Considering the usage of province-city-area picker, when the province is changed, you may want the city column to display the exact cities of current province, so does the area column. And the `CascadePicker` is here to help you handle this.
+
+__Notice:__ Cause this component used create-api, so you should read [create-api](#/en-US/docs/create-api) first.
 
 ### Example
 
@@ -213,19 +217,20 @@
     }
   }
   ```
-  One more thing, although `setData` is available when visible, considering user experience, you can't change the number of columns when the picker is visible.
 
 ### Props configuration
 
 | Attribute | Description | Type | Accepted Values | Default |
 | - | - | - | - | - |
-| title | title | String | '' | - |
 | data | the cascading data used to init option items | Array | [] | - |
 | selectedIndex | the index of the selected item, corresponding content will be displayed when picker shows | Array | [] | [1] |
+| title | title | String | '' | - |
+| subtitle<sup>1.8.1</sup> | subtitle | String | '' | - |
 | cancelTxt | the text of the cancel button | String | '取消' | - |
 | confirmTxt | the text of the confirm button | String | '确定' | - |
 | swipeTime | the duration of the momentum animation when user flicks the wheel of the picker, Unit: ms | Number | 2500 | - |
 | alias | configure the alias of `value` and `text`, used as same as the alias of `Picker` component | Object | {} | { value: 'id', text: 'name'} |
+| visible<sup>1.8.1</sup> | whether visible. Bind to `v-model` | Boolean | true/false | false |
 
 * `data` sub configuration
 
@@ -246,4 +251,6 @@
 
 | Method name | Description | Parameters 1 | Parameters 2 |
 | - | - | - | - |
+| show | show | - | - |
+| hide | hide | - | - |
 | setData | reset the cascading data and selected index | Array, the cascading data | Array, the indexes of selected item in each column |

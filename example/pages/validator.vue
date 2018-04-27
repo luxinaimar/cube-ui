@@ -3,13 +3,13 @@
     <div slot="content">
       <div class="validator-item">
         <cube-input v-model="text1" placeholder="E-mail"></cube-input>
-        <cube-validator v-model="isValid[0]" :for="text1" :rule="rule1" :messages="messages1" :trigger="trigger"></cube-validator>
+        <cube-validator ref="validator1" v-model="isValid[0]" :model="text1" :rules="rules1" :messages="messages1" :immediate="immediate"></cube-validator>
       </div>
       <div class="validator-item">
-        <cube-validator v-model="isValid[1]" :for="text2" :rule="rule2" :messages="messages2" :trigger="trigger">
+        <cube-validator ref="validator2" v-model="isValid[1]" :model="text2" :rules="rules2" :messages="messages2" :immediate="immediate">
           <cube-input v-model="text2" placeholder="component name"></cube-input>
           <div slot="message" class="custom-msg" slot-scope="props">
-            <div v-if="(props.dirty || trigger) && !isValid[1]">
+            <div v-if="(props.dirty || props.validated) && !isValid[1]">
               <i class="dd-cubeic-important"></i> {{ props.message }}
               <div>
                 <span v-for="(item, index) in Object.values(props.result)" :key="index" v-if="item.inValid">{{ item.message + ' ' }}</span>
@@ -19,8 +19,8 @@
         </cube-validator>
       </div>
       <div class="validator-item">
-        <cube-validator v-model="isValid[2]" :for="text3" :rule="rule3" :trigger="trigger">
-          <cube-input v-model="text3" placeholder="odd"></cube-input>
+        <cube-validator ref="validator3" v-model="isValid[2]" :model="text3" :rules="rules3" :immediate="immediate">
+          <cube-input v-model="text3" placeholder="validate odd"></cube-input>
         </cube-validator>
       </div>
       <div class="validator-item">
@@ -29,12 +29,25 @@
           <cube-checkbox label="2">2</cube-checkbox>
           <cube-checkbox label="3">3</cube-checkbox>
         </cube-checkbox-group>
-        <cube-validator v-model="isValid[3]" :for="checkList" :rule="rule4" :trigger="trigger"></cube-validator>
+        <cube-validator ref="validator4" v-model="isValid[3]" :model="checkList" :rules="rules4" :immediate="immediate"></cube-validator>
       </div>
-
       <div class="validator-item">
         <cube-rate v-model="rate"></cube-rate>
-        <cube-validator v-model="isValid[4]" :for="rate" :rule="rule5" :trigger="trigger"></cube-validator>
+        <cube-validator ref="validator5" v-model="isValid[4]" :model="rate" :rules="rules5" :immediate="immediate"></cube-validator>
+      </div>
+      <div class="validator-item">
+        <p>Async validate: </p>
+        <cube-validator
+          ref="validator6"
+          v-model="isValid[5]"
+          :model="captcha"
+          :rules="rules6"
+          :messages="messages6"
+          :immediate="immediate"
+          @validating="validatingHandler"
+          @validated="validatedHandler">
+          <cube-input v-model="captcha" placeholder="Please input captcha"></cube-input>
+        </cube-validator>
       </div>
       <cube-button @click="submit">Submit</cube-button>
     </div>
@@ -46,20 +59,14 @@
 
   // Add or rewrite the build-in rule, type and message.
   import { Validator } from '../../src/module'
-  Validator.setLanguage('en')
-  Validator.addRule('odd', (val, config, type) => !config || Number(val) % 2 === 1)
-  Validator.addMessage('odd', 'Please input odd.')
-  Validator.addType('email', (val) => {
-    return typeof val === 'string' && /^[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)$/i.test(val)
-  })
 
   export default {
     data() {
       return {
-        trigger: false,
+        immediate: false,
         text1: '',
-        isValid: [true, true, true, true, true],
-        rule1: {
+        isValid: [undefined, undefined, undefined, undefined, undefined, undefined],
+        rules1: {
           required: true,
           type: 'email',
           pattern: /didi.com$/,
@@ -72,7 +79,7 @@
           custom: 'The E-mail need contain at least 12 characters.'
         },
         text2: '',
-        rule2: {
+        rules2: {
           type: 'string',
           pattern: /^cube-/,
           min: 8,
@@ -82,33 +89,73 @@
           pattern: 'Please start with "cube-"'
         },
         text3: '100',
-        rule3: {
+        rules3: {
           type: 'number',
           odd: true
         },
         checkList: [],
-        rule4: {
+        rules4: {
           required: true
         },
         rate: 0,
-        rule5: {
+        rules5: {
           min: 1,
           max: 4
+        },
+        captcha: '',
+        rules6: {
+          type: 'number',
+          required: true,
+          len: 6,
+          captchaCheck: (val) => {
+            return (resolve) => {
+              setTimeout(() => {
+                resolve(val === '123456')
+              }, 1000)
+            }
+            /** or return promise:
+            return new Promise((resolve) => {
+              setTimeout(() => {
+                resolve(val === '123456')
+              }, 1000)
+            })
+            **/
+          }
+        },
+        messages6: {
+          captchaCheck: 'Please input "123456"'
         }
       }
     },
+    created() {
+      Validator.setLanguage('en')
+      Validator.addRule('odd', (val, config, type) => {
+        return Number(val) % 2 === 1
+      })
+      Validator.addMessage('odd', 'Please input odd.')
+      Validator.addType('email', (val) => {
+        return typeof val === 'string' && /^[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)$/i.test(val)
+      })
+    },
     methods: {
+      validatingHandler() {
+        console.log('validating')
+      },
+      validatedHandler() {
+        console.log('validated')
+      },
       submit() {
-        if (!this.trigger) {
-          this.trigger = true
-        }
-        if (this.isValid.every(item => item)) {
-          this.$createToast({
-            type: 'correct',
-            txt: 'Submited',
-            time: 1000
-          }).show()
-        }
+        Promise.all(Object.keys(this.$refs).map((key) => {
+          return this.$refs[key].validate()
+        })).then(() => {
+          if (this.isValid.every(item => item)) {
+            this.$createToast({
+              type: 'correct',
+              txt: 'Submited',
+              time: 1000
+            }).show()
+          }
+        })
       }
     },
     components: {

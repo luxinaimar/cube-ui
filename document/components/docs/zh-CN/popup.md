@@ -2,7 +2,9 @@
 
 底层弹层组件，主要用于基于此组件实现上层组件封装，只提供了基础功能：指定类型、是否有背景层、显示内容（HTML）以及是否居中。
 
-内置所有的弹层类组件都是基于此组件实现，包括：[Toast](#/zh-CN/docs/toast)、[Picker](#/zh-CN/docs/picker)、[TimePicker](#/zh-CN/docs/time-picker)、[Dialog](#/zh-CN/docs/dialog)、[ActionSheet](#/zh-CN/docs/action-sheet)。
+内置弹层类组件基本都是基于此组件实现，包括：[Toast](#/zh-CN/docs/toast)、[Picker](#/zh-CN/docs/picker)、[CascadePicker](#/zh-CN/docs/cascade-picker)、[DatePicker](#/zh-CN/docs/date-picker)、[TimePicker](#/zh-CN/docs/time-picker)、[SegmentPicker](#/zh-CN/docs/segment-picker)、[Dialog](#/zh-CN/docs/dialog)、[ActionSheet](#/zh-CN/docs/action-sheet)。
+
+__注：__ 以上组件都是基于 create-api 实现，所以在使用之前，请确保自己了解过 [create-api](#/zh-CN/docs/create-api)。
 
 ### 示例
 
@@ -113,6 +115,7 @@
 
 | 参数 | 说明 | 类型 | 可选值 | 默认值 |
 | - | - | - | - | - |
+| visible<sup>1.8.1</sup> | 显示状态，是否可见。`v-model`绑定值 | Boolean | true/false | false |
 | type | 弹层类型 | String | - | '' |
 | mask | 是否显示背景层 | Boolean | true/false | true |
 | content | 内容，HTML 字符串，在无插槽的时候有效 | String | - | '' |
@@ -123,3 +126,10 @@
 | 事件名 | 说明 | 参数 |
 | - | - | - |
 | mask-click | 背景层点击 | 点击事件对象 |
+
+### 实例方法
+
+| 方法名 | 说明 |
+| - | - |
+| show | 显示 |
+| hide | 隐藏 |

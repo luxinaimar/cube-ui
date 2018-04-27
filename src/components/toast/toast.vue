@@ -10,13 +10,16 @@
 <script type="text/ecmascript-6">
   import CubeLoading from '../loading/loading.vue'
   import CubePopup from '../popup/popup.vue'
-  import apiMixin from '../../common/mixins/api'
+  import visibilityMixin from '../../common/mixins/visibility'
+  import popupMixin from '../../common/mixins/popup'
 
   const COMPONENT_NAME = 'cube-toast'
 
+  const EVENT_TIMEOUT = 'timeout'
+
   export default {
     name: COMPONENT_NAME,
-    mixins: [apiMixin],
+    mixins: [visibilityMixin, popupMixin],
     props: {
       type: {
         type: String,
@@ -34,6 +37,7 @@
         type: Number,
         default: 3000
       },
+      // By default, Toast has the bigest z-index among popoup-based components.
       zIndex: {
         type: Number,
         default: 900
@@ -65,6 +69,7 @@
           if (this.time !== 0) {
             this.timer = setTimeout(() => {
               this.hide()
+              this.$emit(EVENT_TIMEOUT)
             }, this.time)
           }
         })

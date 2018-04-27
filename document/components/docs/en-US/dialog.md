@@ -2,6 +2,8 @@
 
 `Dialog` modal component，provides various styles and interactions.
 
+__Notice:__ Cause this component used create-api, so you should read [create-api](#/en-US/docs/create-api) first.
+
 ### Example
 
 - Dialog type
@@ -153,12 +155,13 @@
 | Attribute | Description | Type | Accepted Values | Default |
 | - | - | - | - | - |
 | type | dialog type | String | alert / confirm | alert |
-| icon | icon class name | String | [refer to built-in icons in style module](#/style) | '' |
+| icon | icon class name | String | [refer to built-in icons in style module](#/en-US/docs/style) | '' |
 | title | title | String | - | '' |
 | content | content | String | - | '' |
 | showClose | whether to show close button | Boolean | true/false | false |
 | confirmBtn | confirm button configuration | Object/String | - | { text: '确定', active: true, href: 'javascript:;' } |
 | cancelBtn | cancel button configuration | Object/String | - | { text: '取消', active: false, href: 'javascript:;' } |
+| visible<sup>1.8.1</sup> | whether visible. Bind to `v-model` | Boolean | true/false | false |
 
 * `confirmBtn` sub configuration
 
@@ -192,3 +195,10 @@
 | confirm | triggers when the confirm button is clicked | e - event target |
 | cancel | triggers when the cancel button is clicked | e - event target |
 | close | triggers when the close button is clicked | e - event target |
+
+### Instance methods
+
+| Method name | Description |
+| - | - |
+| show | show |
+| hide | hide |

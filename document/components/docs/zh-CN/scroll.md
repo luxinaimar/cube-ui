@@ -2,6 +2,16 @@
 
 滚动列表，提供了优质的原生滚动体验，便捷的配置项和事件，是一个基于`better-scroll`进行封装的组件。
 
+### 滚动原理
+
+  由于 better-scroll 的滚动原理为：在滚动方向上，第一个子元素的长度超过了容器的长度。
+
+  那么对于 Scroll 组件，其实就是内容元素`.cube-scroll-content`在滚动方向上的长度必须大于容器元素 `.cube-scroll-wrapper`。根据滚动方向的不同，有以下两种情况：
+
+  1）纵向滚动：内容元素的高度必须大于容器元素。由于容器元素的高度默认会被子元素的高度撑开，所以为了满足我们的滚动前提，你需要给 Scroll 组件的 `.cube-scroll-wrapper`元素一个非弹性高度。
+
+  2）横向滚动：内容元素的宽度必须大于容器元素。由于在默认情况下，子元素的宽度不会超过容器元素，所以需要给 Scroll 组件的 `.cube-scroll-content` 元素设置大于 `.cube-scroll-wrapper` 的宽度。
+
 ### 示例
 
 - 基本使用
@@ -16,18 +26,6 @@
   .cube-scroll-wrapper
     height: 100px
   ```
-
-- 滚动原理
-
-  由于 better-scroll 的滚动原理为：在滚动方向上，第一个子元素的长度超过了容器的长度。
-
-  那么对于 Scroll 组件，其实就是内容元素`.cube-scroll-content`在滚动方向上的长度必须大于容器元素 `.cube-scroll-wrapper`。根据滚动方向的不同，有以下两种情况：
-
-  1）纵向滚动：内容元素的高度必须大于容器元素。由于容器元素的高度默认会被子元素的高度撑开，所以为了满足我们的滚动前提，你需要给 Scroll 组件的 `.cube-scroll-wrapper`元素一个非弹性高度。
-
-  2）横向滚动：内容元素的宽度必须大于容器元素。由于在默认情况下，子元素的宽度不会超过容器元素，所以需要给 Scroll 组件的 `.cube-scroll-content` 元素设置大于 `.cube-scroll-wrapper` 的宽度。
-
-
 
 - 配置 better-scroll 选项
 
@@ -83,13 +81,13 @@
     },
     methods: {
       onPullingDown() {
-        // 模拟更新数据
+        // Mock async load.
         setTimeout(() => {
           if (Math.random() > 0.5) {
-            // 如果有新数据
+            // If have new data, just update the data property.
             this.items.unshift('I am new data: ' + +new Date())
           } else {
-            // 如果没有新数据
+            // If no new data, you need use the method forceUpdate to tell us the load is done.
             this.$refs.scroll.forceUpdate()
           }
         }, 1000)
@@ -130,10 +128,10 @@
     },
     methods: {
       onPullingUp() {
-        // 更新数据
+        // Mock async load.
         setTimeout(() => {
           if (Math.random() > 0.5) {
-            // 如果有新数据
+            // If have new data, just update the data property.
             let newPage = [
               'I am line ' + ++this.itemIndex,
               'I am line ' + ++this.itemIndex,
@@ -144,7 +142,7 @@
 
             this.items = this.items.concat(newPage)
           } else {
-            // 如果没有新数据
+            // If no new data, you need use the method forceUpdate to tell us the load is done.
             this.$refs.scroll.forceUpdate()
           }
         }, 1000)

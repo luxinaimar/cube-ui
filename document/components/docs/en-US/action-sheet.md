@@ -2,6 +2,8 @@
 
 `ActionSheet` provides two common styles and it is flexible.
 
+__Notice:__ Cause this component used create-api, so you should read [create-api](#/en-US/docs/create-api) first.
+
 ### Example
 
 - Basic usage
@@ -141,6 +143,7 @@
 | data | the data list to display | Array | - | [] |
 | active | the highlighted item's index | Number | - | -1 |
 | pickerStyle | Picker style | Boolean | true/false | false |
+| visible<sup>1.8.1</sup> | whether visible. Bind to `v-model` | Boolean | true/false | false |
 
 * `data` sub configuration
 
@@ -156,3 +159,10 @@
 | - | - | - | - |
 | cancel | triggers when clicking the cancel button | - | - |
 | select | triggers when clicking some item | the clicked item - data[index] | the index of the clicked item |
+
+### Instance methods
+
+| Method name | Description |
+| - | - |
+| show | show |
+| hide | hide |
